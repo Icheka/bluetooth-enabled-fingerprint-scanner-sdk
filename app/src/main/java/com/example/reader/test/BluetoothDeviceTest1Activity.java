@@ -13,7 +13,7 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.d;
+import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
@@ -55,7 +55,7 @@ public class BluetoothDeviceTest1Activity extends AppCompatActivity {
     private boolean bAutoLink=true;
     private Timer linkTimer;
     private TimerTask linkTask;
-    d linkd;
+    Handler linkHandler;
 
     private TextView mTitle;
     private ListView mConversationView;
@@ -110,7 +110,7 @@ public class BluetoothDeviceTest1Activity extends AppCompatActivity {
         }else{
             if(mBluetoothReader==null){
                 InitViews();
-                mBluetoothReader = new BluetoothReader(this, md);
+                mBluetoothReader = new BluetoothReader(this, mHandler);
                 mBluetoothReader.InitMatch();
                 AddStatusList(btAddress);
                 if(bAutoLink){
@@ -298,7 +298,7 @@ public class BluetoothDeviceTest1Activity extends AppCompatActivity {
     }
 
     @SuppressLint("HandlerLeak")
-    private final Handler mHandler = new d() {
+    private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -550,7 +550,7 @@ public class BluetoothDeviceTest1Activity extends AppCompatActivity {
                 if (resultCode == Activity.RESULT_OK) {
                     if(mBluetoothReader==null)
                         InitViews();
-                    mBluetoothReader = new BluetoothReader(this, md);
+                    mBluetoothReader = new BluetoothReader(this, mHandler);
                     mBluetoothReader.InitMatch();
 
                     if(bAutoLink){
